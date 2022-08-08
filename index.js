@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const connection = require('./database')
 const passport = require('passport');
 const session = require('express-session')
-//const LocalStrategy = require('passport-local');
+const router = require('./routes/userRoute')
 const initializePassport = require("./passportConfig");
 initializePassport(passport);
 
@@ -21,7 +21,7 @@ app.use(
 connection()
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(router);
 
 
 
