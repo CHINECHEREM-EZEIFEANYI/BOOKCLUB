@@ -8,6 +8,10 @@ const router = require('./routes/userRoute')
 const initializePassport = require("./passportConfig");
 initializePassport(passport);
 
+//view engine
+app.set("view engine", "ejs");
+app.use(express.static('public'));
+
 //body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 
