@@ -31,7 +31,7 @@ app.use(passport.session());
 app.use(flash())
 app.use(express.json());
 app.use(router);
-
+app.use('/signup', router)
 
 
 app.listen(3000, () => (

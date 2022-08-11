@@ -1,17 +1,6 @@
 const router = require('express').Router()
 const { registerUser } = require('../controllers/userController')
 
-// router.get('/signup', (req, res) => {
-//     res.render('register')
-// })
-
-// router.post('/signup', registerUser)
-
-// router.get('/login', (req, res) => {
-//     res.render('login')
-// })
-
-
 /* GET login page. */
 router.get('/login', function (req, res, next) {
     res.render('login', {
@@ -26,6 +15,7 @@ router.get('/signup', function (req, res) {
         message: req.flash('signupMessage')
     });
 }); 
+router.post('/signup', registerUser)
 /* GET Profile page. */
 router.get('/profile', function (req, res, next) {
     res.render('profile', {
