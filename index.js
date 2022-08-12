@@ -5,7 +5,7 @@ const connection = require('./database')
 const passport = require('passport');
 const session = require('express-session')
 const router = require('./routes/userRoute')
-
+const bookRoute = require('./routes/bookRoute')
 const flash = require('connect-flash')
 const gravatar = require('gravatar');
 const initializePassport = require("./passportConfig");
