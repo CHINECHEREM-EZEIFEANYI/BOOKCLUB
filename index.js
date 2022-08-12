@@ -5,6 +5,7 @@ const connection = require('./database')
 const passport = require('passport');
 const session = require('express-session')
 const router = require('./routes/userRoute')
+
 const flash = require('connect-flash')
 const gravatar = require('gravatar');
 const initializePassport = require("./passportConfig");
@@ -31,7 +32,12 @@ app.use(passport.session());
 app.use(flash())
 app.use(express.json());
 app.use(router);
+app.use(bookRoute)
 app.use('/signup', router)
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
 
 
 app.listen(3000, () => (

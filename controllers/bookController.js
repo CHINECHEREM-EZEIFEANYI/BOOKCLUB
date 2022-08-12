@@ -1,4 +1,4 @@
-const { Book } = require('../route/schema')
+const { Book } = require('../models/books')
 const asyncWrapper = require('./async')
 const mongoose = require("mongoose")
 
