@@ -34,9 +34,6 @@ app.use(express.json());
 app.use(router);
 app.use(bookRoute)
 app.use('/signup', router)
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
 
 
 

@@ -52,3 +52,17 @@ exports.deleteBook = asyncWrapper(async (req, res) => {
     res.status(200).json({ msg: "Deleted Successfully" })
 
 })
+// app.delete("/api/books/:id", async (req, res) => {
+//     try {
+//         const { id: id } = req.params;
+//         console.log(id);
+//         if (!mongoose.Types.ObjectId.isValid(id))
+//             return res.status(404).json({
+//                 msg: `No task with id :${id}`
+//             });
+//         const task = await Task.findOneAndDelete({ _id: id });
+//         res.status(200).json(task);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });

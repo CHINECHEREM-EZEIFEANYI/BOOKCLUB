@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const { registerUser } = require('../controllers/userController')
-
+const gravatar = require('gravatar');
 /* GET login page. */
 router.get('/login', function (req, res, next) {
     res.render('login', {
@@ -20,7 +20,7 @@ router.post('/signup', registerUser)
 router.get('/profile', function (req, res, next) {
     res.render('profile', {
         title: 'Profile Page', user: req.user,
-        avatar: gravatar.url(req.user.email, {
+        avatar: gravatar.url({ email: req.body.email }, {
             s: '100', r: 'x', d:
                 'retro'
         }, true)
