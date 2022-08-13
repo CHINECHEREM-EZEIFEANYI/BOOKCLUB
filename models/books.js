@@ -2,7 +2,7 @@ const { Schema } = require('mongoose')
 const mongoose = require('mongoose')
 
 
-const BookSchema = new mongoose.Schema({
+const BookSchema = new Schema({
     ISBN: {
         type: String,
     },
