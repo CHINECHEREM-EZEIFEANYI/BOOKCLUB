@@ -1,11 +1,13 @@
       <!DOCTYPE html> 
       <html> 
       <head> 
-          <title><%= title %></title> 
-          <% include ../partials/stylesheet %> 
+          <title><%= title %>
+          </title> 
+          <link 
+          rel="stylesheet"
+           href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
       </head> 
       <body> 
-        <% include ../partials/header %> 
    
         <div class="container"> 
             <% if (message.length > 0) { %> 
@@ -25,7 +27,7 @@
               control" placeholder="Email address" required=""> 
             <label for="inputPassword" class="sr-only">Password</label> 
             <input type="password" id="password" name="password"
-             class="form-control" placeholder="Password" required=""> 
+             class="form-control" placeholder="Password" required=""> <br>
             <button class="btn btn-lg btn-primary btn-block" 
                type="submit">Sign in</button> 
             <br> 
@@ -34,7 +36,5 @@
           </form> 
         </div> 
  
-        <% include ../partials/footer %> 
-        <% include ../partials/javascript %> 
       </body> 
       </html> 
