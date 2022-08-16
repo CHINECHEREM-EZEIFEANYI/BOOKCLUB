@@ -20,7 +20,7 @@ router.post('/signup', registerUser)
 router.get('/profile', function (req, res, next) {
     res.render('profile', {
         title: 'Profile Page', user: zeffy,
-        avatar: gravatar.url({ email: zeffy@gmail.com}, {
+        avatar: gravatar.url({ email: email.req}, {
             s: '100', r: 'x', d:
                 'retro'
         }, true)
