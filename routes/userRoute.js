@@ -40,4 +40,4 @@ router.get('/profile', function (req, res, next) {
 
 module.exports = router;
 
-//  <strong>Name</strong>: <%= user.local.name %><br>
+
