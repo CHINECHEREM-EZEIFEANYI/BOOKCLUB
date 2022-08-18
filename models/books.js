@@ -17,3 +17,14 @@ const BookSchema = new Schema({
     },
 })
 exports.Book = mongoose.model('Book', BookSchema);
+
+
+// Undefined,
+//     Adventure,
+//     Biography,
+//     Dystopia,
+//     Fantastic,
+//     Horror,
+//     Science,
+//     ScienceFiction,
+//     Poetry

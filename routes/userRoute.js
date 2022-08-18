@@ -5,7 +5,7 @@ const { User } = require('../models/user');
 const crypto = require("crypto");
 
 function generateAvatarUrl(emailAddress, options = {}) {
-    const defaultImage = options.defaultImage || "identicon";
+    const defaultImage = options.defaultImage || "monsterid";
     const emailHash = crypto
         .createHash("md5")
         .update(emailAddress)
