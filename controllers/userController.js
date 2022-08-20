@@ -2,6 +2,36 @@ const { User } = require('../models/user');
 const passport = require("passport");
 const bcrypt = require('bcrypt')
 const initialize = require('../passportConfig')
+
+function sendEmail(email, token) {
+    var email = email;
+    var token = token;
+
+    var mail = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "mynodemailtestmail@gmail.com",
+            pass: "Nodemailer",
+        },
+    });
+
+    var mailOptions = {
+        from: "mynodemailtestmail@gmail.com",
+        to: email,
+        subject: "Reset Password Link - myApp.com",
+        html:
+            '<p>You requested for reset password, kindly use this <a href="http://localhost:5000/users/newpasswordpage?token=' +
+            token +
+            '">link</a> to reset your password </p>',
+    };
+    mail.sendMail(mailOptions, (error, data) => {
+        if (error) {
+            console.log("mailing error");
+        } else {
+            console.log("Email sent successfully:" + data.response);
+        }
+    });
+}
 exports.registerUser = async (req, res, next) => {
     const { first_name, last_name, email, password, passwordConfirm, } = req.body;
     console.log({ first_name, last_name, email, password, passwordConfirm });
