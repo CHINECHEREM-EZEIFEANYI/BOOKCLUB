@@ -3,35 +3,6 @@ const passport = require("passport");
 const bcrypt = require('bcrypt')
 const initialize = require('../passportConfig')
 
-function sendEmail(email, token) {
-    var email = email;
-    var token = token;
-
-    var mail = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: "mynodemailtestmail@gmail.com",
-            pass: "Nodemailer",
-        },
-    });
-
-    var mailOptions = {
-        from: "mynodemailtestmail@gmail.com",
-        to: email,
-        subject: "Reset Password Link - myApp.com",
-        html:
-            '<p>You requested for reset password, kindly use this <a href="http://localhost:5000/users/newpasswordpage?token=' +
-            token +
-            '">link</a> to reset your password </p>',
-    };
-    mail.sendMail(mailOptions, (error, data) => {
-        if (error) {
-            console.log("mailing error");
-        } else {
-            console.log("Email sent successfully:" + data.response);
-        }
-    });
-}
 exports.registerUser = async (req, res, next) => {
     const { first_name, last_name, email, password, passwordConfirm, } = req.body;
     console.log({ first_name, last_name, email, password, passwordConfirm });
@@ -102,3 +73,55 @@ exports.loginUser = function (req, res, next) {
         failureFlash: true
     }, initialize)
 }
+	
+/* send reset password link in email */
+exports.newpassword = ( function(req, res, next) {
+ 
+    var email = req.body.email;
+ 
+    //console.log(sendEmail(email, fullUrl));
+ 
+    connection.query('SELECT * FROM users WHERE email ="' + email + '"', function(err, result) {
+        if (err) throw err;
+         
+        var type = ''
+        var msg = ''
+   
+        console.log(result[0]);
+     
+        if (result[0].email.length > 0) {
+ 
+           var token = randtoken.generate(20);
+ 
+           var sent = sendEmail(email, token);
+ 
+             if (sent != '0') {
+ 
+                var data = {
+                    token: token
+                }
+ 
+                connection.query('UPDATE users SET ? WHERE email ="' + email + '"', data, function(err, result) {
+                    if(err) throw err
+         
+                })
+ 
+                type = 'success';
+                msg = 'The reset password link has been sent to your email address';
+ 
+            } else {
+                type = 'error';
+                msg = 'Something goes to wrong. Please try again';
+            }
+ 
+        } else {
+            console.log('2');
+            type = 'error';
+            msg = 'The Email is not registered with us';
+ 
+        }
+    
+        req.flash(type, msg);
+        res.redirect('/');
+    });
+})

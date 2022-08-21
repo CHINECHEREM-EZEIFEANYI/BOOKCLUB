@@ -8,6 +8,7 @@ const router = require('./routes/userRoute')
 const bookRoute = require('./routes/bookRoute')
 const flash = require('connect-flash')
 const gravatar = require('gravatar');
+
 const initializePassport = require("./passportConfig");
 initializePassport(passport);
 

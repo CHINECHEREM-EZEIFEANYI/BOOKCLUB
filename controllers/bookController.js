@@ -1,9 +1,11 @@
 const { Book } = require('../models/books')
 const asyncWrapper = require('./async')
 const mongoose = require("mongoose")
-
+// if (!mongoose.Types.ObjectId.isValid(id))
+//     return false;
 
 exports.getAllBooks = asyncWrapper(async (req, res) => {
+    
     const books = await Book.find({})
     res.status(200).json({ books })
 
@@ -11,7 +13,10 @@ exports.getAllBooks = asyncWrapper(async (req, res) => {
 
 
 exports.createBook = asyncWrapper(async (req, res) => {
-
+    if (!mongoose.Types.ObjectId.isValid(id))
+        return res.status(404).json({
+            msg: `No task with id :${id}`
+        });
     const book = await Book.create(req.body)
     res.status(200).json({ book })
 })
@@ -19,6 +24,10 @@ exports.createBook = asyncWrapper(async (req, res) => {
 exports.getBook = asyncWrapper(async (req, res) => {
 
     const { id: BookID } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id))
+        return res.status(404).json({
+            msg: `No task with id :${id}`
+        });
     const book = await Book.findOne({ _id: BookID })
     if (!book) {
         return res.status(404).json({ msg: `No book with with id: ${BookID}` })
@@ -45,6 +54,10 @@ exports.updateBook = asyncWrapper(async (req, res) => {
 
 exports.deleteBook = asyncWrapper(async (req, res) => {
     const { id: BookID } = req.params
+if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({
+        msg: `No task with id :${id}`
+    });
     const book = await Book.findOneAndDelete({ _id: BookID })
     if (!book) {
         return res.status(404).json({ msg: `No book with with id: ${BookID}` })
@@ -52,7 +65,8 @@ exports.deleteBook = asyncWrapper(async (req, res) => {
     res.status(200).json({ msg: "Deleted Successfully" })
 
 })
-// app.delete("/api/books/:id", async (req, res) => {
+
+// app.delete ("/api/books/:id", async (req, res) => {
 //     try {
 //         const { id: id } = req.params;
 //         console.log(id);

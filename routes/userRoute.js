@@ -3,6 +3,8 @@ const { registerUser } = require('../controllers/userController')
 const gravatar = require('gravatar');
 const { User } = require('../models/user');
 const crypto = require("crypto");
+const nodemailer = require("nodemailer");
+var randtoken = require('rand-token');
 
 function generateAvatarUrl(emailAddress, options = {}) {
     const defaultImage = options.defaultImage || "monsterid";
@@ -11,6 +13,37 @@ function generateAvatarUrl(emailAddress, options = {}) {
         .update(emailAddress)
         .digest("hex");
     return `https://www.gravatar.com/avatar/${emailHash}?d=${defaultImage}`;
+    
+}
+//send email
+function sendEmail(email, token) {
+
+    var email = email;
+    var token = token;
+
+    var mail = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'chydigigirls@gmail.com', 
+            pass: '12345' 
+        }
+    });
+
+    var mailOptions = {
+        from: 'chydigigirls@gmail.com',
+        to: email,
+        subject: 'Reset Password Link - Bookclub.com',
+        html: '<p>You requested for reset password, kindly use this <a href="http://localhost:3000/newpassword?token=' + token + '">link</a> to reset your password</p>'
+
+    };
+
+    mail.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log('Email Not Sent!!!')
+        } else {
+            console.log("Email Successfully Sent")
+        }
+    });
 }
 /* GET login page. */
 router.get('/login', function (req, res, next) {
@@ -37,6 +70,7 @@ router.get('/profile', function (req, res, next) {
         }, true)
     });
 }); 
+
 
 module.exports = router;
 
