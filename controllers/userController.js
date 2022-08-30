@@ -115,7 +115,7 @@ exports.newpassword = ( function(req, res, next) {
             }
  
         } else {
-            console.log('2');
+            console.log('The Email is not registered with us');
             type = 'error';
             msg = 'The Email is not registered with us';
  
