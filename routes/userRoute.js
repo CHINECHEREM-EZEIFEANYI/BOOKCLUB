@@ -95,6 +95,15 @@ router.post('/updatepassword', function (req, res, next) {
     });
 })
 router.post("/updatepassword", passwordreset)
+
+// const data = ["apple","apple watch","iphone","iphone x","apple macbook","apple macbook air","apple macbook air pro 13"];
+
+// router.get('/suggest', function(req, res, next) {
+//   console.log(req.query)
+//   res.setHeader('Content-Type', 'application/json');
+//   res.end(JSON.stringify(data.filter(value => value.includes(req.query.q))));
+// });
+
 module.exports = router;
 
 
