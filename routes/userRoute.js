@@ -1,10 +1,9 @@
 const router = require('express').Router()
 const { registerUser } = require('../controllers/userController')
+const { passwordreset } = require('../controllers/userController')
 const gravatar = require('gravatar');
 const { User } = require('../models/user');
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
-var randtoken = require('rand-token');
 const bcrypt = require('bcrypt')
 
 function generateAvatarUrl(emailAddress, options = {}) {
@@ -16,41 +15,12 @@ function generateAvatarUrl(emailAddress, options = {}) {
     return `https://www.gravatar.com/avatar/${emailHash}?d=${defaultImage}`;
     
 }
-//send email
-function sendEmail(email, token) {
 
-    var email = email;
-    var token = token;
-
-    var mail = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'chydigigirls@gmail.com', 
-            pass: '12345' 
-        }
-    });
-
-    var mailOptions = {
-        from: 'chydigigirls@gmail.com',
-        to: email,
-        subject: 'Reset Password Link - Bookclub.com',
-        html: '<p>You requested for reset password, kindly use this <a href="http://localhost:3000/newpassword?token=' + token + '">link</a> to reset your password</p>'
-
-    };
-
-    mail.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log('Email Not Sent!!!')
-        } else {
-            console.log("Email Successfully Sent")
-        }
-    });
-}
 /* GET login page. */
 router.get('/login', function (req, res, next) {
     res.render('login', {
-        title: 'Login Page', message:
-            req.flash('loginMessage')
+        title: 'Login Page',
+        message: req.flash('loginMessage')
     });
 }); 
 /* GET Signup */
@@ -109,7 +79,7 @@ router.post('/updatepassword', function (req, res, next) {
 
         } else {
 
-            console.log('2');
+            console.log('Invalid link. Please try again');
             type = 'success';
             msg = 'Invalid link; please try again';
 
@@ -117,9 +87,14 @@ router.post('/updatepassword', function (req, res, next) {
 
         req.flash(type, msg);
         res.redirect('/');
+        res.render('forgotpassword', {
+            title: 'Retrieve Password Page',
+            message: req.flash('signupMessage')
+        })
+
     });
 })
-
+router.post("/updatepassword", passwordreset)
 module.exports = router;
 
 

@@ -1,6 +1,8 @@
 const { User } = require('../models/user');
 const passport = require("passport");
 const bcrypt = require('bcrypt')
+const nodemailer = require("nodemailer");
+var randtoken = require('rand-token');
 const initialize = require('../passportConfig')
 
 exports.registerUser = async (req, res, next) => {
@@ -60,7 +62,36 @@ exports.registerUser = async (req, res, next) => {
         }
     }
 }
+//send email
+function sendEmail(email, token) {
 
+    var email = email;
+    var token = token;
+
+    var mail = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'chydigigirls@gmail.com', 
+            pass: '12345' 
+        }
+    });
+
+    var mailOptions = {
+        from: 'chydigigirls@gmail.com',
+        to: email,
+        subject: 'Reset Password Link - Bookclub.com',
+        html: '<p>You requested for reset password, kindly use this <a href="http://localhost:3000/newpassword?token=' + token + '">link</a> to reset your password</p>'
+
+    };
+
+    mail.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log('Email Not Sent!!!')
+        } else {
+            console.log("Email Successfully Sent")
+        }
+    });
+}
 exports.logoutUser = function (req, res) {
     req.logout();
     res.redirect("/");
@@ -75,7 +106,7 @@ exports.loginUser = function (req, res, next) {
 }
 	
 /* send reset password link in email */
-exports.newpassword = ( function(req, res, next) {
+exports.passwordreset = ( function(req, res, next) {
  
     var email = req.body.email;
  
@@ -108,17 +139,23 @@ exports.newpassword = ( function(req, res, next) {
  
                 type = 'success';
                 msg = 'The reset password link has been sent to your email address';
- 
-            } else {
+                 console.log(res.headersSent)
+                 return res.render("homepage")
+             }
+            
+             else {
                 type = 'error';
-                msg = 'Something goes to wrong. Please try again';
+                 msg = 'Ooopssssie. Please try again';
+                 res.render("forgotpassword");
             }
+
  
         } else {
             console.log('The Email is not registered with us');
             type = 'error';
             msg = 'The Email is not registered with us';
- 
+            res.render("forgotpassword");
+            console.log(res.headersSent)
         }
     
         req.flash(type, msg);
