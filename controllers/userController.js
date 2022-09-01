@@ -62,6 +62,40 @@ exports.registerUser = async (req, res, next) => {
         }
     }
 }
+//create autocomplete
+function autocompleteMatch(input) {
+    if (input == '') {
+        return [];
+    }
+    var reg = new RegExp(input)
+    return search_terms.filter(function (term) {
+        if (term.match(reg)) {
+            return term;
+        }
+    });
+}
+function showResults(val) {
+    res = document.getElementById("result");
+    res.innerHTML = '';
+    if (val == '') {
+        return;
+    }
+    let list = '';
+    fetch('/suggest?q=' + val).then(
+        function (response) {
+            return response.json();
+        }).then(function (data) {
+            for (i = 0; i < data.length; i++) {
+                list += '<li>' + data[i] + '</li>';
+            }
+            res.innerHTML = '<ul>' + list + '</ul>';
+            return true;
+        }).catch(function (err) {
+            console.warn('Something went wrong.', err);
+            return false;
+        });
+}
+
 //send email
 function sendEmail(email, token) {
 
