@@ -16,3 +16,6 @@
 #result ul li:hover {
     background: #eee;
 }
+body {
+    background-color: lightblue;
+}

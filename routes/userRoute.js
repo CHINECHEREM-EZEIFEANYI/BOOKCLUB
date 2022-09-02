@@ -98,11 +98,18 @@ router.post("/updatepassword", passwordreset)
 
 const data = ["apple","apple watch","iphone","iphone x","apple macbook","apple macbook air","apple macbook air pro 13"];
 
-router.get('/suggest', function (req, res, next) {
-    console.log(req.query)
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(data.filter(value => value.includes(req.query.q))));
-});
+// router.get('/suggest', function (req, res, next) {
+//     console.log(req.query)
+//     res.setHeader('Content-Type', 'application/json');
+//     res.end(JSON.stringify(data.filter(value => value.includes(req.query.q))));
+// });
+
+router.get('/select', function (req, res) {
+    res.render('select', {
+        title: 'Books Available',
+        message: req.flash('Books Available')
+    });
+}); 
 
 module.exports = router;
 
