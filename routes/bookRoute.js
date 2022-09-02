@@ -12,16 +12,6 @@ bookRoute.get('/check', (req, res) => {
     res.send('BOOKS AVAILABLE')
 })
 
-// function checkAuthenticated(req, res, next) {
-//     if (req.book) {
-//         next();
-//     }
 
-//     else {
-//         req.flash('success_msg', 'You need to be authenticated to access this page');
-//         res.redirect("/login");
-
-//     }
-// }
 module.exports = bookRoute
 
