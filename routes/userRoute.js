@@ -104,17 +104,17 @@ const data = ["apple","apple watch","iphone","iphone x","apple macbook","apple m
 //     res.end(JSON.stringify(data.filter(value => value.includes(req.query.q))));
 // });
 
-router.get('/select', checkAuthenticated, function (req, res) {
+router.get('/select', function (req, res) {
     res.render('select', {
         title: 'Books Available',
         message: req.flash('Books Available')
     });
 }); 
 
-module.exports = router;
+
 
 function checkAuthenticated(req, res, next) {
-    if (req.book) {
+    if (req.user) {
         next();
     }
 
@@ -124,3 +124,7 @@ function checkAuthenticated(req, res, next) {
 
     }
 }
+
+module.exports = router;
+
+

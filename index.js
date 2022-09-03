@@ -38,6 +38,6 @@ app.use('/signup', router)
 
 
 
-app.listen(5000, () => (
+app.listen(3002, () => (
     console.log('Up and running')
 ))
