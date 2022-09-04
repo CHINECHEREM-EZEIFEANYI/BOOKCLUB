@@ -12,3 +12,6 @@
       background-repeat: no-repeat;
       background-size: cover;
   } */
+ a:hover {
+     transition: all 0.3s ease;
+ }

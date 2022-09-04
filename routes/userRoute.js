@@ -5,7 +5,6 @@ const { passwordreset } = require('../controllers/userController')
 const gravatar = require('gravatar');
 const { User } = require('../models/user');
 const crypto = require("crypto");
-const bcrypt = require('bcrypt')
 
 function generateAvatarUrl(emailAddress, options = {}) {
     const defaultImage = options.defaultImage || "monsterid";
